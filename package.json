@@ -1,0 +1,41 @@
+{
+  "name": "react-data-debugger",
+  "version": "1.0.2",
+  "description": "A developer debugging tool to view js object changes over time",
+  "main": "main.ts",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/finite-automaton/react-jsobject-debugger.git"
+  },
+  "keywords": [
+    "pretty",
+    "javascript",
+    "object",
+    "debug",
+    "debugger",
+    "react"
+  ],
+  "author": "John Fletcher",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/finite-automaton/react-data-debugger/issues"
+  },
+  "homepage": "https://github.com/finite-automaton/react-data-debugger#readme",
+  "peerDependencies": {
+    "ballerina-core": "^1.0.36",
+    "react": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0 || ^19.0.0",
+    "typescript": "^4.0.0 || ^5.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "ballerina-core": "^1.0.36",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.4.5",
+    "ts-node": "^10.9.2"
+  }
+}
