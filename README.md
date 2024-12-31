@@ -1,5 +1,6 @@
 # react-data-debugger
-A developer debugging tool to view js object changes over time
+A developer debugging tool to view js object changes over time.
+This tool is intended for using while developing, and not for production code.
 
 Built with [ballerina](https://www.npmjs.com/package/ballerina-core) 
 
@@ -18,28 +19,29 @@ It's main goals are to be easy to use with minimal set up and to provide a basic
 
 **npm**
 
-```npm i react-jsobject-debugger --save-dev```
+```npm i react-data-debugger --save-dev```
 
 **yarn**
 
-```yarn add react-jsobject-debugger --dev```
+```yarn add react-data-debugger --dev```
 
 ### 2. Import Debugger to any jsx file
 
-```import { Debugger } from "react-jsobject-debugger";```
+```import { Debugger } from "react-data-debugger";```
 
-### 3.  Call the ```Debugger``` function (as many times as needed) within your React component and pass the object as the first argument and, if desired, pass options as the second.
+### 3.  Use the ```Debugger``` either as a function, or a JSX component (as many times as needed) within your React component and pass the object as the first argument and, if desired, pass options as the second.
 
 ```
 export const BuggyComponent = (props) =>
     {
         const [myObject, setMyObject] = useState({});
 
-        Debbugger(myObject, {open: true})
+        Debugger({jsObject: myObject, open: true, label: "1"})
 
         return (
             <>
-
+            
+                <Debugger jsObject={myObject} label="2" open />
                 <h1> My component </h1>
                 ....
                 
@@ -48,10 +50,8 @@ export const BuggyComponent = (props) =>
     }
 ```
 
-## Options
 
-You can call the Debugger as man times as desired to debug different data.
-It can be handy to call the debugger with the same data to examine differences in steps over time (diffing).
+## Options
 
 The debugger accepts some options for convenience:
 
@@ -65,6 +65,10 @@ The debugger accepts some options for convenience:
 *Note*: The options are not global and must be specified per debugger
 
 ## Additional Info
+
+You can use the Debugger as man times as desired within a component to debug different data.
+
+It can be handy to call the debugger with the same data to examine differences in steps over time (diffing).
 
 Each debugger is rendered in its own shadow dom, avoiding css clashes.
 

@@ -1,5 +1,5 @@
 import { unit } from "ballerina-core";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createRoot, Root } from "react-dom/client";
 
 import { styles } from "./css";
@@ -39,17 +39,19 @@ const DebuggerContainer = ({
   );
 };
 
-export const Debugger = (
-  jsObject: Record<string | number | symbol, unknown>,
-  options?: {
-    label?: string;
-    open?: boolean;
-    lightMode?: boolean;
-    noReplaceUndefined?: boolean;
-  }
-) => {
-
-  const { label, open, lightMode, noReplaceUndefined } = options;
+export const Debugger = ({
+  jsObject,
+  label,
+  open,
+  lightMode,
+  noReplaceUndefined,
+}: {
+  jsObject: Record<string | number | symbol, unknown>;
+  label?: string;
+  open?: boolean;
+  lightMode?: boolean;
+  noReplaceUndefined?: boolean;
+}) => {
   let initialized = useRef(false);
   const root = useRef<Root | null>(null);
   const id = useRef<string>("");
@@ -103,8 +105,9 @@ export const Debugger = (
     shadowRoot.adoptedStyleSheets = [sheet];
   }
 
-  return root.current
-    ? root.current.render(
+  useEffect(() => {
+    if (root.current) {
+      root.current.render(
         <DebuggerContainer
           open={open}
           lightMode={lightMode}
@@ -115,6 +118,9 @@ export const Debugger = (
           swapPrev={swapPrev}
           moveToTop={moveToTop}
         />
-      )
-    : undefined;
+      );
+    }
+  }, [JSON.stringify(jsObject)]);
+
+  return <></>;
 };
