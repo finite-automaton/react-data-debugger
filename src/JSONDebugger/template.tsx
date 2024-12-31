@@ -5,7 +5,6 @@ import {
   JSONDebuggerWritableState,
 } from "./state";
 import {
-  SetHistoryToCurrentRunner,
   UpdateHistoryRunner,
 } from "./coroutines/runner";
 
@@ -15,6 +14,5 @@ export const JSONDebuggerTemplate = Template.Default<
   Unit,
   JSONDebuggerView
 >((props) => <props.view {...props} />).any([
-  SetHistoryToCurrentRunner,
   UpdateHistoryRunner,
 ]);

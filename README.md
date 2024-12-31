@@ -28,16 +28,18 @@ It's main goals are to be easy to use with minimal set up and to provide a basic
 
 ```import { Debugger } from "react-jsobject-debugger";```
 
-### 3.  Insert the ```Debugger``` react component anywhere in your React component and passt he object to debug into the jsObject prop
+### 3.  Call the ```Debugger``` function (as many times as needed) within your React component and pass the object as the first argument and, if desired, pass options as the second.
 
 ```
 export const BuggyComponent = (props) =>
     {
         const [myObject, setMyObject] = useState({});
 
+        Debbugger(myObject, {open: true})
+
         return (
             <>
-                <Debugger jsObject={myObject} />
+
                 <h1> My component </h1>
                 ....
                 
@@ -48,7 +50,10 @@ export const BuggyComponent = (props) =>
 
 ## Options
 
-The debugger accepts some optional props for convenience:
+You can call the Debugger as man times as desired to debug different data.
+It can be handy to call the debugger with the same data to examine differences in steps over time (diffing).
+
+The debugger accepts some options for convenience:
 
 | prop | type |  Function |
 | ---- | ---- | --------- |
