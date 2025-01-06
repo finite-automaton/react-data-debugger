@@ -56,28 +56,6 @@ export const Debugger = ({
   const root = useRef<Root | null>(null);
   const id = useRef<string>("");
 
-  const curr = document.getElementById(id.current);
-  const swapPrev = () => {
-    const prev = document.getElementById(id.current)?.previousSibling;
-
-    if (prev && curr) {
-      curr.after(prev);
-    }
-  };
-  const swapNext = () => {
-    const next = document.getElementById(id.current)?.nextSibling;
-
-    if (next && curr) {
-      curr.before(next);
-    }
-  };
-
-  const moveToTop = () => {
-    if (curr) {
-      curr.parentElement?.appendChild(curr);
-    }
-  };
-
   const ID_PREFIX = "£!@£json-debugger-";
   if (!initialized.current) {
     initialized.current = true;
@@ -104,6 +82,28 @@ export const Debugger = ({
     root.current = createRoot(shadowRoot);
     shadowRoot.adoptedStyleSheets = [sheet];
   }
+
+  const curr = document.getElementById(id.current);
+  const swapPrev = () => {
+    const prev = document.getElementById(id.current)?.previousSibling;
+
+    if (prev && curr) {
+      curr.after(prev);
+    }
+  };
+  const swapNext = () => {
+    const next = document.getElementById(id.current)?.nextSibling;
+
+    if (next && curr) {
+      curr.before(next);
+    }
+  };
+
+  const moveToTop = () => {
+    if (curr) {
+      curr.parentElement?.appendChild(curr);
+    }
+  };
 
   useEffect(() => {
     if (root.current) {
