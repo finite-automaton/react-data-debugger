@@ -127,7 +127,7 @@ export const LeftIndentIcon = () => {
   );
 };
 
-export const PauseIcon = () => {
+export const PauseIcon = ({ color }: { color: string }) => {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -137,7 +137,7 @@ export const PauseIcon = () => {
     >
       <path
         d="M8 5V19M16 5V19"
-        stroke="#000000"
+        stroke={color}
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -146,7 +146,7 @@ export const PauseIcon = () => {
   );
 };
 
-export const PlayIcon = () => {
+export const PlayIcon = ({ color }: { color: string }) => {
   return (
     <svg
       viewBox="0 0 16 16"
@@ -164,16 +164,14 @@ export const PlayIcon = () => {
         {" "}
         <path
           d="M5 16L7 16L15 8L7 -2.7818e-08L5 0L5 16Z"
-          fill="#000000"
+          fill={color}
         ></path>{" "}
       </g>
     </svg>
   );
 };
 
-export const ShowIcon = (
-  { color }: { color: string },
-) => {
+export const ShowIcon = ({ color }: { color: string }) => {
   return (
     <svg
       fill={color}
@@ -189,9 +187,7 @@ export const ShowIcon = (
   );
 };
 
-export const HideIcon = (
-  { color }: { color: string },
-) => {
+export const HideIcon = ({ color }: { color: string }) => {
   return (
     <svg
       fill={color}
@@ -207,10 +203,10 @@ export const HideIcon = (
   );
 };
 
-export const ForwardIcon = () => {
+export const ForwardIcon = ({ color }: { color: string }) => {
   return (
     <svg
-      fill="#000000"
+      fill={color}
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
@@ -223,10 +219,10 @@ export const ForwardIcon = () => {
   );
 };
 
-export const BackwardIcon = () => {
+export const BackwardIcon = ({ color }: { color: string }) => {
   return (
     <svg
-      fill="#000000"
+      fill={color}
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
@@ -365,7 +361,7 @@ export const DarkModeIcon = ({ color }: { color: string }) => {
   );
 };
 
-export const LightModeIcon = ({color}: {color: string}) => {
+export const LightModeIcon = ({ color }: { color: string }) => {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -404,6 +400,85 @@ export const LightModeIcon = ({color}: {color: string}) => {
           strokeLinecap="round"
           strokeLinejoin="round"
         ></path>{" "}
+      </g>
+    </svg>
+  );
+};
+
+export const MergeIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#000000"
+      style={{
+        width: "20px",
+      }}
+    >
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <g>
+          <path fill="none" d="M0 0H24V24H0z"></path>
+          <path d="M20 3c.552 0 1 .448 1 1v16c0 .552-.448 1-1 1H4c-.552 0-1-.448-1-1V4c0-.552.448-1 1-1h16zm-9 2H5v5.999h2V9l3 3-3 3v-2H5v6h6v-2h2v2h6v-6h-2v2l-3-3 3-3v1.999h2V5h-6v2h-2V5zm2 8v2h-2v-2h2zm0-4v2h-2V9h2z"></path>{" "}
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const SplitIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#000000"
+      style={{
+        width: "20px",
+      }}
+    >
+      <g id="SVGRepo_iconCarrier">
+        <g>
+          <path fill="none" d="M0 0H24V24H0z"></path>
+          <path d="M20 3c.552 0 1 .448 1 1v16c0 .552-.448 1-1 1H4c-.552 0-1-.448-1-1V4c0-.552.448-1 1-1h16zm-9 2H5v14h6v-4h2v4h6V5h-6v4h-2V5zm4 4l3 3-3 3v-2H9v2l-3-3 3-3v2h6V9z"></path>{" "}
+        </g>
+      </g>
+    </svg>
+  );
+};
+
+export const ScrollLockIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#000000"
+      style={{
+        width: "16px",
+      }}
+    >
+      <g id="SVGRepo_iconCarrier">
+        <rect width="16" height="16" id="icon-bound" fill="none"></rect>
+        <path d="M12.25,7H12V4c0-1.653-1.347-3-3-3H7C5.347,1,4,2.347,4,4v3H3.75C3.338,7,3,7.338,3,7.75v6.5C3,14.663,3.338,15,3.75,15h8.5 c0.413,0,0.75-0.337,0.75-0.75v-6.5C13,7.338,12.663,7,12.25,7z M6,4c0-0.55,0.45-1,1-1h2c0.55,0,1,0.45,1,1v3H6V4z"></path>{" "}
+      </g>
+    </svg>
+  );
+};
+
+export const ScrollUnlockIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="#000000"
+      style={{
+        width: "16px",
+      }}
+    >
+      <g id="SVGRepo_iconCarrier">
+        <rect width="16" height="16" id="icon-bound" fill="none"></rect>
+        <path d="M12.25,7H12V4c0-1.653-1.347-3-3-3H7C5.347,1,4,2.347,4,4v1h2V4c0-0.55,0.45-1,1-1h2c0.55,0,1,0.45,1,1v3H3.75 C3.338,7,3,7.338,3,7.75v6.5C3,14.662,3.338,15,3.75,15h8.5c0.412,0,0.75-0.338,0.75-0.75v-6.5C13,7.338,12.662,7,12.25,7z"></path>{" "}
       </g>
     </svg>
   );

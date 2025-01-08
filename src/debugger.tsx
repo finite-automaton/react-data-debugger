@@ -16,6 +16,7 @@ const DebuggerContainer = ({
   swapNext,
   swapPrev,
   moveToTop,
+  id,
 }: any) => {
   const [JSONDebuggerState, setJSONDebuggerState] = useState<JSONDebugger>(
     JSONDebugger.Default({ open, lightMode })
@@ -31,6 +32,7 @@ const DebuggerContainer = ({
         swapNext,
         swapPrev,
         moveToTop,
+        id
       }}
       setState={setJSONDebuggerState}
       foreignMutations={unit}
@@ -63,6 +65,8 @@ export const Debugger = ({
     if (!document.getElementById(`${ID_PREFIX}PARENT`)) {
       const _ = document.createElement("div");
       _.id = `${ID_PREFIX}PARENT`;
+      _.style.zIndex = "2147483647";
+      _.style.position = "fixed";
       document.body.appendChild(_);
     }
 
@@ -117,6 +121,7 @@ export const Debugger = ({
           swapNext={swapNext}
           swapPrev={swapPrev}
           moveToTop={moveToTop}
+          id={id.current}
         />
       );
     }

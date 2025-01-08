@@ -1,24 +1,25 @@
 import { replaceWith } from "ballerina-core";
 import { JSONDebugger, JSONDebuggerView } from "../state";
 import {
-  BackwardIcon,
   DarkModeIcon,
   DragIcon,
-  ForwardIcon,
   HideIcon,
   LayerDownIcon,
   LayerUpIcon,
   LeftIndentIcon,
   LightModeIcon,
-  PauseIcon,
-  PlayIcon,
+  MergeIcon,
   ResizeIcon,
   RightIndentIcon,
+  ScrollLockIcon,
+  ScrollUnlockIcon,
   SendToFrontIcon,
   ShowIcon,
+  SplitIcon,
   TextDecreaseIcon,
   TextIncreaseIcon,
 } from "./icons";
+import { ViewerControls } from "./ViewerControls";
 
 export const JsonDebugger: JSONDebuggerView = (props) => {
   const onDragMouseDown = (e: React.MouseEvent) => {
@@ -75,25 +76,47 @@ export const JsonDebugger: JSONDebuggerView = (props) => {
   const onDarkModeClick = (_: React.MouseEvent) =>
     props.setState(JSONDebugger.Updaters.Core.darkMode((_) => !_));
 
-  const onPauseClick = (_: React.MouseEvent) =>
-    props.setState(JSONDebugger.Updaters.Core.paused(replaceWith(true)));
+  const onPause1Click = (_: React.MouseEvent) =>
+    props.setState(JSONDebugger.Updaters.Core.paused1(replaceWith(true)));
 
-  const onPlayClick = (_: React.MouseEvent) =>
-    props.setState(JSONDebugger.Updaters.Core.paused(replaceWith(false)));
+  const onPause2Click = (_: React.MouseEvent) =>
+    props.setState(JSONDebugger.Updaters.Core.paused2(replaceWith(true)));
 
-  const onHistoryForwardClick = (_: React.MouseEvent) =>
+  const onPlay1Click = (_: React.MouseEvent) =>
+    props.setState(JSONDebugger.Updaters.Core.paused1(replaceWith(false)));
+
+  const onPlay2Click = (_: React.MouseEvent) =>
+    props.setState(JSONDebugger.Updaters.Core.paused2(replaceWith(false)));
+
+  const onHistory1ForwardClick = (_: React.MouseEvent) =>
     props.setState(
-      JSONDebugger.Updaters.Core.paused(replaceWith(true)).then(
-        JSONDebugger.Updaters.Core.current((_) =>
+      JSONDebugger.Updaters.Core.paused1(replaceWith(true)).then(
+        JSONDebugger.Updaters.Core.current1((_) =>
           _ < props.context.history.size - 1 ? _ + 1 : _
         )
       )
     );
 
-  const onHistoryBackwardClick = (_: React.MouseEvent) =>
+  const onHistory2ForwardClick = (_: React.MouseEvent) =>
     props.setState(
-      JSONDebugger.Updaters.Core.paused(replaceWith(true)).then(
-        JSONDebugger.Updaters.Core.current((_) => (_ > 0 ? _ - 1 : _))
+      JSONDebugger.Updaters.Core.paused2(replaceWith(true)).then(
+        JSONDebugger.Updaters.Core.current2((_) =>
+          _ < props.context.history.size - 1 ? _ + 1 : _
+        )
+      )
+    );
+
+  const onHistory1BackwardClick = (_: React.MouseEvent) =>
+    props.setState(
+      JSONDebugger.Updaters.Core.paused1(replaceWith(true)).then(
+        JSONDebugger.Updaters.Core.current1((_) => (_ > 0 ? _ - 1 : _))
+      )
+    );
+
+  const onHistory2BackwardClick = (_: React.MouseEvent) =>
+    props.setState(
+      JSONDebugger.Updaters.Core.paused2(replaceWith(true)).then(
+        JSONDebugger.Updaters.Core.current2((_) => (_ > 0 ? _ - 1 : _))
       )
     );
 
@@ -113,8 +136,18 @@ export const JsonDebugger: JSONDebuggerView = (props) => {
       JSONDebugger.Updaters.Core.indent((_) => (_ > 1 ? _ - 1 : _))
     );
 
-  const curr = props.context.paused
-    ? props.context.history.valueSeq().toArray()[props.context.current]
+  const onShowDiffClick = (_: React.MouseEvent) =>
+    props.setState(JSONDebugger.Updaters.Core.showDiff((_) => !_));
+
+  const onScrollLockClick = (_: React.MouseEvent) =>
+    props.setState(JSONDebugger.Updaters.Core.scrollLock((_) => !_));
+
+  const curr = props.context.paused1
+    ? props.context.history.valueSeq().toArray()[props.context.current1]
+    : props.context.history.last();
+
+  const curr2 = props.context.paused2
+    ? props.context.history.valueSeq().toArray()[props.context.current2]
     : props.context.history.last();
 
   const lightModeText = "black";
@@ -125,6 +158,21 @@ export const JsonDebugger: JSONDebuggerView = (props) => {
 
   const darkModeAccent = "grey";
   const lightModeAccent = "lightblue";
+
+  const divs = document
+    .getElementById(props.context.id)!
+    .shadowRoot!.querySelectorAll(".jsObjectContainer");
+
+  if (props.context.scrollLock) {
+    divs.forEach((div) =>
+      div.addEventListener("scroll", (_) => {
+        divs.forEach((d) => {
+          d.scrollTop = div.scrollTop;
+          d.scrollLeft = div.scrollLeft;
+        });
+      })
+    );
+  }
 
   return (
     <div
@@ -278,31 +326,10 @@ export const JsonDebugger: JSONDebuggerView = (props) => {
                   : lightModeAccent,
               }}
             >
-              <div className="playbackButtons buttonGroup">
-                {props.context.paused ? (
-                  <button className="menuButton" onClick={onPlayClick}>
-                    <PlayIcon />
-                  </button>
-                ) : (
-                  <button className="menuButton" onClick={onPauseClick}>
-                    <PauseIcon />
-                  </button>
-                )}
-                <button onClick={onHistoryForwardClick} className="menuButton">
-                  <ForwardIcon />
+              <div className="buttonGroup">
+                <button onClick={onShowDiffClick} className="menuButton" style={{ marginTop: "8px"}}>
+                  {props.context.showDiff ? <MergeIcon/> : <SplitIcon />}
                 </button>
-                <button onClick={onHistoryBackwardClick} className="menuButton">
-                  <BackwardIcon />
-                </button>
-              </div>
-              <div className="pageNumbers">
-                <p className="menuText pageNumberDivider">{`${props.context.current + 1}`}</p>
-                <p
-                  className="menuText"
-                  style={{
-                    textShadow: "-.5px 0,  0 .5px,  .5px 0,  0 -.5px",
-                  }}
-                >{`${props.context.history.size}`}</p>
               </div>
               <div className="buttonGroup">
                 <button
@@ -340,15 +367,33 @@ export const JsonDebugger: JSONDebuggerView = (props) => {
                   <SendToFrontIcon />
                 </button>
               </div>
+              {props.context.showDiff && (
+                <div className="buttonGroup">
+                  <button className="menuButton" onClick={onScrollLockClick}>
+                    {props.context.scrollLock ? <ScrollLockIcon /> : <ScrollUnlockIcon />}
+                  </button>
+                </div>
+              )}
             </div>
+
             <div
-              className="jsObject"
+              className="jsObjectContainer"
               style={{
                 fontSize: `${props.context.fontSize}px`,
                 lineHeight: `${props.context.fontSize}px`,
               }}
             >
-              <pre>
+              <ViewerControls
+                paused={props.context.paused1}
+                current={props.context.current1}
+                onPauseClick={onPause1Click}
+                onPlayClick={onPlay1Click}
+                onHistoryForwardClick={onHistory1ForwardClick}
+                onHistoryBackwardClick={onHistory1BackwardClick}
+                historySize={props.context.history.size}
+                darkMode={props.context.darkMode}
+              />
+              <pre className="jsObject">
                 {JSON.stringify(
                   curr,
                   props.context.noReplaceUndefined
@@ -358,6 +403,38 @@ export const JsonDebugger: JSONDebuggerView = (props) => {
                 )}
               </pre>
             </div>
+            {props.context.showDiff && (
+              <div
+                className="jsObjectContainer"
+                style={{
+                  fontSize: `${props.context.fontSize}px`,
+                  lineHeight: `${props.context.fontSize}px`,
+                  borderLeft: `2px solid ${
+                    props.context.darkMode ? darkModeAccent : lightModeAccent
+                  }`,
+                }}
+              >
+                <ViewerControls
+                  paused={props.context.paused2}
+                  current={props.context.current2}
+                  onPauseClick={onPause2Click}
+                  onPlayClick={onPlay2Click}
+                  onHistoryForwardClick={onHistory2ForwardClick}
+                  onHistoryBackwardClick={onHistory2BackwardClick}
+                  historySize={props.context.history.size}
+                  darkMode={props.context.darkMode}
+                />
+                <pre className="jsObject">
+                  {JSON.stringify(
+                    curr2,
+                    props.context.noReplaceUndefined
+                      ? undefined
+                      : (_, v) => (v === undefined ? null : v),
+                    props.context.indent
+                  )}
+                </pre>
+              </div>
+            )}
           </div>
         </div>
       )}

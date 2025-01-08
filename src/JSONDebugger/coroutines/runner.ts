@@ -5,11 +5,20 @@ import { Co } from "./builder";
 
 export const UpdateHistory = Co.GetState().then((currentState) =>
   Co.SetState(
-    JSONDebugger.Updaters.Core.current(
-      currentState.paused ? id : replaceWith(currentState.history.size)
+    JSONDebugger.Updaters.Core.current1(
+      currentState.paused1 ? id : replaceWith(currentState.history.size)
     ).then(
-      JSONDebugger.Updaters.Core.history(
-        replaceWith(currentState.history.set(Date.now().toString(), currentState.jsObject))
+      JSONDebugger.Updaters.Core.current2(
+        currentState.paused2 ? id : replaceWith(currentState.history.size)
+      ).then(
+        JSONDebugger.Updaters.Core.history(
+          replaceWith(
+            currentState.history.set(
+              Date.now().toString(),
+              currentState.jsObject
+            )
+          )
+        )
       )
     )
   )

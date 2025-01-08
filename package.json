@@ -1,6 +1,6 @@
 {
   "name": "react-data-debugger",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "A developer debugging tool to view js object changes over time",
   "main": "main.ts",
   "scripts": {},

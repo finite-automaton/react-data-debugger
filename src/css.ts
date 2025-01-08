@@ -90,7 +90,7 @@ export const styles = /*css*/ `
         flex-direction: column;
         position: fixed;
         font-size: 12px;
-        min-width: 60px;
+        min-width: 120px;
         min-height: 60px;
         border: 1px solid grey;
         overflow: hidden;
@@ -102,6 +102,7 @@ export const styles = /*css*/ `
         font-family: monospace;
         display: flex;
         overflow: hidden;
+        width: 100%;
         height: 100%;
     }
 
@@ -120,7 +121,6 @@ export const styles = /*css*/ `
 
     .pageNumbers {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
     }
@@ -146,20 +146,65 @@ export const styles = /*css*/ `
         }
     }
 
-    .pageNumberDivider {
-        border-bottom: 1px solid darkslategray;
+    .playbackButton {
+        all: unset;
+        width: 18px;
+        height: 18px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &:hover {
+            background-color: lightgrey;
+            cursor: pointer;
+        }
+    }
+    .playbackButtons {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        gap: 8px;
     }
 
-    .jsObject {
+    .jsObjectContainer {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         padding: 12px;
+        padding-top: 0px;
+        padding-right: 0px;
         text-align: left;
-        overflow: scroll;
-        width:100%;
+        width: 100%;
         z-index: 1;
+        overflow: auto;
+    }
+
+    .viewerControlsContainer {
+        position: sticky;
+        top: 0;
+        left: 100%;
+        height: 0;
+        width: 0;
+        overflow: visible;
+    }
+
+    .viewerControls {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        border-bottom-left-radius: 4px;
+        padding-left: 8px;
+        gap: 8px;
+        min-width: 110px;
+        line-height: unset;
+    }
+
+
+    .jsObject {
+        margin-top: 12px;
+        /* overflow: scroll; */
     }
 
     .resizeButton {
@@ -197,21 +242,12 @@ export const styles = /*css*/ `
         overflow: hidden;
     }
 
-    .playbackButtons {
-        margin-top: 12px;
-    }
-
     .buttonGroup {
         display: flex;
         flex-direction: column;
         gap: 2px;
         width: 100%;
     }
-/* 
-    .iconWrapper {
-        width: 24px;
-        border-radius: 4px;
-    } */
 
     .arrowIcon {
         display: flex;
@@ -220,8 +256,6 @@ export const styles = /*css*/ `
         width: 24px;
 
         border-radius: 4px;
-        /* padding: 16px; */
-
         &:hover {
             background-color: lightgrey;
             cursor: pointer;

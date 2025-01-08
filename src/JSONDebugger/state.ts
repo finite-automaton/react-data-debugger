@@ -4,11 +4,13 @@ import { OrderedMap } from "immutable";
 export type JSONDebugger = {
   open: boolean;
   history: OrderedMap<string, any>;
-  current: number;
+  current1: number;
+  current2: number;
   darkMode: boolean;
   fontSize: number;
   indent: number;
-  paused: boolean;
+  paused1: boolean;
+  paused2: boolean;
   xPosition: number;
   yPosition: number;
   width: number;
@@ -17,6 +19,8 @@ export type JSONDebugger = {
   yOffset: number;
   isMoving: boolean;
   isResizing: boolean;
+  showDiff: boolean;
+  scrollLock: boolean;
 };
 
 export const JSONDebugger = {
@@ -29,11 +33,13 @@ export const JSONDebugger = {
   }): JSONDebugger => ({
     open: open ?? false,
     history: OrderedMap(),
-    current: 0,
+    current1: 0,
+    current2: 0,
     darkMode: lightMode ? false : true,
     fontSize: 12,
     indent: 2,
-    paused: false,
+    paused1: false,
+    paused2: false,
     xPosition: 0,
     yPosition: 0,
     width: 300,
@@ -42,16 +48,20 @@ export const JSONDebugger = {
     yOffset: 0,
     isMoving: false,
     isResizing: false,
+    showDiff: false,
+    scrollLock: false,
   }),
   Updaters: {
     Core: {
       ...simpleUpdater<JSONDebugger>()("history"),
-      ...simpleUpdater<JSONDebugger>()("current"),
+      ...simpleUpdater<JSONDebugger>()("current1"),
+      ...simpleUpdater<JSONDebugger>()("current2"),
       ...simpleUpdater<JSONDebugger>()("open"),
       ...simpleUpdater<JSONDebugger>()("darkMode"),
       ...simpleUpdater<JSONDebugger>()("fontSize"),
       ...simpleUpdater<JSONDebugger>()("indent"),
-      ...simpleUpdater<JSONDebugger>()("paused"),
+      ...simpleUpdater<JSONDebugger>()("paused1"),
+      ...simpleUpdater<JSONDebugger>()("paused2"),
       ...simpleUpdater<JSONDebugger>()("xPosition"),
       ...simpleUpdater<JSONDebugger>()("yPosition"),
       ...simpleUpdater<JSONDebugger>()("width"),
@@ -60,6 +70,8 @@ export const JSONDebugger = {
       ...simpleUpdater<JSONDebugger>()("yOffset"),
       ...simpleUpdater<JSONDebugger>()("isMoving"),
       ...simpleUpdater<JSONDebugger>()("isResizing"),
+      ...simpleUpdater<JSONDebugger>()("showDiff"),
+      ...simpleUpdater<JSONDebugger>()("scrollLock"),
     },
     Template: {
       position: (
@@ -100,6 +112,7 @@ export type JSONDebuggerWritableState = JSONDebugger;
 
 export type JSONDebuggerReadOnlyContext = {
   jsObject: Record<string | number | symbol, unknown>;
+  id: string;
   label?: string;
   noReplaceUndefined?: boolean;
   swapPrev: () => void;
